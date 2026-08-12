@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luiz Guilherme Cirilo — Engenharia Estrutural</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root{
+    --blue-deep:#001663;
+    --graphite:#3D3D3D;
+    --graphite-soft:#6B6B6B;
+    --paper:#F6F7F9;
+    --line:#DADFE6;
+    --rust:#A8391E;
+    --white:#FFFFFF;
+    --ink:#101114;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+    background:var(--white);
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+  a{color:inherit; text-decoration:none;}
+  img,svg{display:block; max-width:100%;}
+
+  .wrap{max-width:1160px; margin:0 auto; padding:0 32px;}
+
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--graphite-soft);
+    margin-bottom:14px;
+    display:block;
+  }
+  .eyebrow.accent{color:var(--rust);}
+
+  .axis{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--graphite-soft);
+    border:1px solid var(--line);
+    padding:2px 8px;
+    display:inline-block;
+    margin-bottom:20px;
+  }
+
+  h1,h2,h3,.display{font-family:'Poppins',sans-serif; color:var(--blue-deep); line-height:1.2;}
+  p{color:var(--graphite);}
+
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'Inter',sans-serif; font-weight:600; font-size:15px;
+    padding:13px 24px; border-radius:2px; cursor:pointer;
+    border:1px solid var(--blue-deep);
+    transition:opacity .15s ease;
+  }
+  .btn:hover{opacity:0.85;}
+  .btn-primary{background:var(--blue-deep); color:var(--white);}
+  .btn-ghost{background:transparent; color:var(--blue-deep);}
+  .btn-on-dark{background:var(--white); color:var(--blue-deep); border-color:var(--white);}
+
+  /* ---------- NAV ---------- */
+  nav{
+    border-bottom:1px solid var(--line);
+    padding:18px 0;
+  }
+  nav .wrap{display:flex; align-items:center; justify-content:space-between;}
+  .brand{display:flex; align-items:center; gap:12px;}
+  .brand-text .name{font-size:14px; font-weight:600; color:var(--ink);}
+  .brand-text .role{font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--graphite-soft);}
+  .nav-links{display:flex; gap:30px; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:var(--graphite);}
+  .nav-links a:hover{color:var(--blue-deep);}
+  .nav-cta{display:flex; align-items:center; gap:24px;}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative; overflow:hidden;}
+  .hero::before{
+    content:'';
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:48px 48px;
+    background-position:center top;
+    -webkit-mask-image:linear-gradient(to bottom, black 55%, transparent 100%);
+    mask-image:linear-gradient(to bottom, black 55%, transparent 100%);
+    z-index:0;
+  }
+  .hero-inner{
+    position:relative; z-index:1;
+    padding:72px 0 88px;
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:48px;
+    align-items:center;
+  }
+  .hero h1{font-size:44px; font-weight:700; margin-bottom:20px; letter-spacing:-0.01em;}
+  .hero p.lead{font-size:17px; max-width:480px; margin-bottom:32px;}
+  .hero-ctas{display:flex; gap:14px; flex-wrap:wrap;}
+
+  /* ---------- DIFERENCIAL ---------- */
+  .diferencial{padding:80px 0; background:var(--paper);}
+  .dif-card{
+    border-left:3px solid var(--rust);
+    padding:8px 0 8px 28px;
+    max-width:720px;
+  }
+  .dif-card h2{font-size:28px; margin-bottom:14px;}
+  .dif-card p{font-size:16px; max-width:600px;}
+
+  /* ---------- SERVICOS ---------- */
+  .servicos{padding:88px 0;}
+  .section-head{max-width:600px; margin-bottom:48px;}
+  .section-head h2{font-size:30px;}
+  .cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line);}
+  .card{background:var(--white); padding:30px 26px;}
+  .card h3{font-size:17px; margin-bottom:10px; color:var(--ink); font-weight:600; font-family:'Inter',sans-serif;}
+  .card p{font-size:14px; line-height:1.6;}
+
+  /* ---------- COMO FUNCIONA ---------- */
+  .como{padding:88px 0; background:var(--paper);}
+  .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:0;}
+  .step{padding:0 24px 0 0; border-right:1px solid var(--line);}
+  .step:last-child{border-right:none;}
+  .step-num{font-family:'JetBrains Mono',monospace; font-weight:500; font-size:26px; color:var(--blue-deep); margin-bottom:16px;}
+  .step h3{font-size:15px; font-family:'Inter',sans-serif; font-weight:600; color:var(--ink); margin-bottom:8px;}
+  .step p{font-size:13.5px; line-height:1.55;}
+
+  /* ---------- COBERTURA ---------- */
+  .cobertura{padding:80px 0;}
+  .cobertura-inner{display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start;}
+  .cobertura h2{font-size:28px; margin-bottom:16px;}
+  .cobertura p{font-size:15.5px; max-width:460px;}
+  .cobertura .fact{border-top:1px solid var(--line); padding-top:16px; margin-top:20px;}
+  .cobertura .fact .n{font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--rust);}
+
+  /* ---------- PORTFOLIO ---------- */
+  .portfolio{padding:88px 0; background:var(--paper);}
+  .tiles{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+  .tile{background:var(--white); border:1px solid var(--line);}
+  .tile-art{aspect-ratio:4/3; display:flex; align-items:center; justify-content:center; padding:20px;}
+  .tile-cap{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--graphite-soft); padding:12px 16px; border-top:1px solid var(--line);}
+
+  /* ---------- SOBRE ---------- */
+  .sobre{padding:56px 0 80px; background:var(--paper);}
+  .sobre-inner{display:grid; grid-template-columns:0.8fr 1.2fr; gap:48px; align-items:start;}
+  .sobre h2{font-size:28px; margin-bottom:16px;}
+  .sobre p{font-size:15.5px; max-width:520px;}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--blue-deep); color:var(--white); padding:76px 0 40px;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-size:48px 48px;
+  }
+  footer h2{color:var(--white); font-size:32px; max-width:520px; margin-bottom:28px;}
+  footer .eyebrow{color:rgba(255,255,255,0.55);}
+  .footer-bottom{
+    margin-top:72px; padding-top:24px; border-top:1px solid rgba(255,255,255,0.18);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
+    font-family:'JetBrains Mono',monospace; font-size:12px; color:rgba(255,255,255,0.6);
+  }
+
+  @media (max-width:860px){
+    .wrap{padding:0 20px;}
+    .nav-links{display:none;}
+    .nav-cta .btn{padding:10px 14px; font-size:13px; white-space:nowrap;}
+    .brand-text .name{white-space:nowrap;}
+    .hero-inner{grid-template-columns:1fr; padding:48px 0 56px;}
+    .hero h1{font-size:32px;}
+    .hero-svg{max-width:320px; margin:0 auto;}
+    .steps{grid-template-columns:1fr; gap:28px;}
+    .step{border-right:none; border-left:2px solid var(--line); padding:0 0 0 20px;}
+    .cobertura-inner{grid-template-columns:1fr;}
+    .tiles{grid-template-columns:repeat(2,1fr);}
+    .sobre-inner{grid-template-columns:1fr;}
+    footer h2{font-size:26px;}
+  }
+  @media (max-width:520px){
+    .tiles{grid-template-columns:1fr;}
+    .hero-ctas .btn{width:100%; justify-content:center;}
+  }
+
+  @media print{
+    body{-webkit-print-color-adjust:exact; print-color-adjust:exact;}
+    .card, .step, .tile, .dif-card{page-break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="wrap">
+    <div class="brand">
+      <svg width="26" height="26" viewBox="0 0 26 26"><polygon points="13,1 24,7 24,19 13,25 2,19 2,7" fill="none" stroke="#001663" stroke-width="1.6"/><circle cx="13" cy="13" r="2.5" fill="#001663"/></svg>
+      <div class="brand-text">
+        <div class="name">Luiz Guilherme Cirilo</div>
+        <div class="role">Engenharia estrutural</div>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="#servicos">Serviços</a>
+      <a href="#diferencial">Diferencial</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#portfolio">Portfólio</a>
+      <a href="#sobre">Sobre</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-primary" href="#contato">Falar no WhatsApp</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-inner">
+    <div>
+      <span class="eyebrow">Engenharia estrutural para escritórios de arquitetura</span>
+      <h1>O projeto estrutural entra no fluxo do arquiteto, não o contrário.</h1>
+      <p class="lead">Cálculo estrutural em concreto armado com retorno preliminar no mesmo dia de envio das plantas. Atendimento remoto em todo o Brasil, com visita técnica presencial para projetos de maior complexidade.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#contato">Falar no WhatsApp</a>
+        <a class="btn btn-ghost" href="#como-funciona">Ver como funciona</a>
+      </div>
+    </div>
+    <div class="hero-svg">
+      <svg viewBox="0 0 420 380" width="100%">
+        <g stroke="#DADFE6" stroke-width="1">
+          <line x1="60" y1="30" x2="60" y2="320"/><line x1="150" y1="30" x2="150" y2="320"/>
+          <line x1="250" y1="30" x2="250" y2="320"/><line x1="360" y1="30" x2="360" y2="320"/>
+          <line x1="40" y1="60" x2="380" y2="60"/><line x1="40" y1="150" x2="380" y2="150"/>
+          <line x1="40" y1="250" x2="380" y2="250"/>
+        </g>
+        <g fill="#001663">
+          <rect x="55" y="55" width="10" height="10"/><rect x="145" y="55" width="10" height="10"/>
+          <rect x="245" y="55" width="10" height="10"/><rect x="355" y="55" width="10" height="10"/>
+          <rect x="55" y="145" width="10" height="10"/><rect x="245" y="145" width="10" height="10"/>
+          <rect x="355" y="145" width="10" height="10"/>
+          <rect x="55" y="245" width="10" height="10"/><rect x="150" y="245" width="10" height="10"/>
+          <rect x="250" y="245" width="10" height="10"/><rect x="360" y="245" width="10" height="10"/>
+        </g>
+        <polygon points="150,138 158,143 158,153 150,158 142,153 142,143" fill="none" stroke="#A8391E" stroke-width="1.6"/>
+        <g stroke="#3D3D3D" stroke-width="1">
+          <line x1="60" y1="345" x2="150" y2="345"/>
+          <line x1="60" y1="341" x2="60" y2="349"/><line x1="150" y1="341" x2="150" y2="349"/>
+          <line x1="150" y1="345" x2="250" y2="345"/>
+          <line x1="250" y1="341" x2="250" y2="349"/>
+        </g>
+        <text x="95" y="362" font-family="JetBrains Mono, monospace" font-size="11" fill="#6B6B6B">8.40</text>
+        <text x="185" y="362" font-family="JetBrains Mono, monospace" font-size="11" fill="#6B6B6B">6.20</text>
+        <text x="20" y="64" font-family="JetBrains Mono, monospace" font-size="11" fill="#6B6B6B">A</text>
+        <text x="20" y="154" font-family="JetBrains Mono, monospace" font-size="11" fill="#6B6B6B">B</text>
+        <text x="20" y="254" font-family="JetBrains Mono, monospace" font-size="11" fill="#6B6B6B">C</text>
+        <text x="57" y="22" font-family="JetBrains Mono, monospace" font-size="11" fill="#6B6B6B">1</text>
+        <text x="147" y="22" font-family="JetBrains Mono, monospace" font-size="11" fill="#6B6B6B">2</text>
+        <text x="247" y="22" font-family="JetBrains Mono, monospace" font-size="11" fill="#6B6B6B">3</text>
+        <text x="357" y="22" font-family="JetBrains Mono, monospace" font-size="11" fill="#6B6B6B">4</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIAL -->
+<section class="diferencial" id="diferencial">
+  <div class="wrap">
+    <span class="axis">B</span>
+    <div class="dif-card">
+      <span class="eyebrow accent">Diferencial</span>
+      <h2>Pré-análise no mesmo dia</h2>
+      <p>Envie a planta baixa e receba, ainda no mesmo dia, um retorno preliminar sobre viabilidade estrutural, vãos críticos e possíveis interferências. Sem fila de espera para a primeira resposta.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICOS -->
+<section class="servicos" id="servicos">
+  <div class="wrap">
+    <span class="axis">C</span>
+    <div class="section-head">
+      <span class="eyebrow">Serviços</span>
+      <h2>Estrutura como parte do projeto, não como etapa isolada</h2>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <h3>Projeto estrutural em concreto armado</h3>
+        <p>Cálculo, dimensionamento e detalhamento compatibilizados com o projeto arquitetônico, do lançamento estrutural à execução.</p>
+      </div>
+      <div class="card">
+        <h3>Projetos metálicos</h3>
+        <p>Estruturas mistas ou totalmente metálicas, desenvolvidas com parceiros integrados ao processo.</p>
+      </div>
+      <div class="card">
+        <h3>Elétrica e hidráulica</h3>
+        <p>Projetos complementares via parceiros, compatibilizados com a estrutura desde a concepção.</p>
+      </div>
+      <div class="card">
+        <h3>Laudos, perícias e patologia estrutural</h3>
+        <p>Vistoria técnica, diagnóstico de manifestações patológicas e laudos para fins diversos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section class="como" id="como-funciona">
+  <div class="wrap">
+    <span class="axis">D</span>
+    <div class="section-head">
+      <span class="eyebrow">Como funciona</span>
+      <h2>Do envio das plantas ao projeto compatibilizado</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Envio das plantas</h3>
+        <p>Você envia a planta baixa e as informações do terreno.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>Pré-análise no mesmo dia</h3>
+        <p>Retorno preliminar sobre viabilidade estrutural e pontos de atenção.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>Proposta e cronograma</h3>
+        <p>Escopo, prazo e valor definidos conforme a complexidade real do projeto.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h3>Desenvolvimento compatibilizado</h3>
+        <p>Cálculo, dimensionamento e detalhamento alinhados ao projeto arquitetônico.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COBERTURA -->
+<section class="cobertura">
+  <div class="wrap">
+    <span class="axis">E</span>
+    <div class="cobertura-inner">
+      <div>
+        <h2>Atendimento remoto em todo o Brasil</h2>
+        <p>Escritórios de arquitetura em qualquer estado contam com o mesmo padrão de acompanhamento. Para projetos de maior complexidade, a visita técnica presencial já está prevista na proposta.</p>
+      </div>
+      <div>
+        <div class="fact">
+          <span class="n">100% remoto</span>
+          <p style="margin-top:6px;">do envio das plantas à entrega do projeto compatibilizado, em qualquer estado.</p>
+        </div>
+        <div class="fact">
+          <span class="n">Visita técnica prevista</span>
+          <p style="margin-top:6px;">custo já incorporado à proposta para projetos de maior complexidade.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="portfolio" id="portfolio">
+  <div class="wrap">
+    <span class="axis">F</span>
+    <div class="section-head">
+      <span class="eyebrow">Portfólio</span>
+      <h2>Renders estruturais em 3D</h2>
+    </div>
+    <div class="tiles">
+      <div class="tile">
+        <div class="tile-art">
+          <svg viewBox="0 0 140 100" width="100%"><g fill="none" stroke="#001663" stroke-width="1.2"><rect x="30" y="30" width="60" height="50"/><line x1="30" y1="30" x2="50" y2="15"/><line x1="90" y1="30" x2="110" y2="15"/><line x1="90" y1="80" x2="110" y2="65"/><line x1="50" y1="15" x2="110" y2="15"/><line x1="110" y1="15" x2="110" y2="65"/><line x1="30" y1="55" x2="90" y2="55"/></g></svg>
+        </div>
+        <div class="tile-cap">Render estrutural — TQS</div>
+      </div>
+      <div class="tile">
+        <div class="tile-art">
+          <svg viewBox="0 0 140 100" width="100%"><g fill="none" stroke="#001663" stroke-width="1.2"><rect x="25" y="20" width="40" height="60"/><rect x="75" y="35" width="40" height="45"/><line x1="25" y1="40" x2="65" y2="40"/><line x1="25" y1="60" x2="65" y2="60"/><line x1="75" y1="55" x2="115" y2="55"/></g></svg>
+        </div>
+        <div class="tile-cap">Render estrutural — Eberick</div>
+      </div>
+      <div class="tile">
+        <div class="tile-art">
+          <svg viewBox="0 0 140 100" width="100%"><g fill="none" stroke="#001663" stroke-width="1.2"><line x1="20" y1="80" x2="120" y2="80"/><line x1="35" y1="80" x2="35" y2="25"/><line x1="70" y1="80" x2="70" y2="15"/><line x1="105" y1="80" x2="105" y2="30"/><line x1="35" y1="25" x2="70" y2="15"/><line x1="70" y1="15" x2="105" y2="30"/></g></svg>
+        </div>
+        <div class="tile-cap">Render estrutural — TQS</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section class="sobre" id="sobre">
+  <div class="wrap">
+    <span class="axis">G</span>
+    <div class="sobre-inner">
+      <div>
+        <span class="eyebrow">Sobre</span>
+        <h2>Luiz Guilherme Tempesta Cirilo</h2>
+      </div>
+      <p>Engenheiro civil (CREA-SP), especializado em projetos estruturais em concreto armado para escritórios de arquitetura. Atua de forma independente, com parceiros integrados para projetos elétricos, hidráulicos e estruturas metálicas. Baseado na região de Cajuru e Ribeirão Preto (SP), com atendimento remoto em todo o Brasil.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contato">
+  <div class="wrap">
+    <span class="eyebrow">Contato</span>
+    <h2>Vamos falar sobre o seu próximo projeto</h2>
+    <a class="btn btn-on-dark" href="#">Falar no WhatsApp</a>
+    <div class="footer-bottom">
+      <span>Luiz Guilherme Cirilo — Engenharia estrutural</span>
+      <span>CREA-SP 5071184940 · Cajuru, SP</span>
+      <span>LinkedIn ↗</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
